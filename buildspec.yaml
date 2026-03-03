@@ -1,0 +1,30 @@
+version: 0.2
+
+env:
+  variables:
+    ENV_MODE: "production"
+    S3_BUCKET: "austinpatkos.com"
+    CLOUDFRONT_ID: "E33148JHYQZ1HM"
+    NPM_CONFIG_LEGACY_PEER_DEPS: "true"
+
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo Installing dependencies...
+      - npm ci
+
+  build:
+    commands:
+      - npm run build
+  
+  post_build:
+    commands:
+          - aws s3 sync dist/ s3://$S3_BUCKET/ --delete
+          - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_ID --paths "/*"  
+
+artifacts:
+  files:
+    - '**/*'
