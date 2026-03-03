@@ -1,0 +1,253 @@
+.Area-Of-Focus-Main {
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 20px 80px;
+  color: var(--light);
+  animation: fadeIn 1s ease-out;
+  position: relative;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.Area-Of-Focus-Title {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  text-align: center;
+  margin-bottom: 60px;
+  background: var(--gradient-hack);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  position: relative;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: neonPulse 4s ease-in-out infinite;
+}
+
+.Area-Of-Focus-Title::before {
+  content: '< ';
+  color: var(--terminal-green);
+  opacity: 0.7;
+}
+
+.Area-Of-Focus-Title::after {
+  content: ' />';
+  color: var(--neon-blue);
+  opacity: 0.7;
+}
+
+.Area-Of-Focus-Area {
+  background: rgba(2, 4, 8, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 6px;
+  padding: 40px;
+  margin-bottom: 30px;
+  border: 2px solid rgba(0, 255, 65, 0.3);
+  border-left: 5px solid var(--terminal-green);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  animation: slideInLeft 0.6s ease-out backwards;
+  box-shadow: 
+    0 0 20px rgba(0, 255, 65, 0.1),
+    inset 0 0 40px rgba(0, 255, 65, 0.03);
+}
+
+.Area-Of-Focus-Area:nth-child(2) {
+  animation-delay: 0.1s;
+  border-left-color: var(--neon-blue);
+}
+
+.Area-Of-Focus-Area:nth-child(3) {
+  animation-delay: 0.2s;
+  border-left-color: var(--neon-pink);
+}
+
+.Area-Of-Focus-Area:nth-child(4) {
+  animation-delay: 0.3s;
+  border-left-color: var(--warning);
+}
+
+.Area-Of-Focus-Area:nth-child(5) {
+  animation-delay: 0.4s;
+  border-left-color: var(--neon-blue);
+}
+
+.Area-Of-Focus-Area:nth-child(6) {
+  animation-delay: 0.5s;
+  border-left-color: var(--terminal-green);
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Hex pattern background on hover */
+.Area-Of-Focus-Area::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(30deg, rgba(0, 255, 65, 0.03) 12%, transparent 12.5%, transparent 87%, rgba(0, 255, 65, 0.03) 87.5%),
+    linear-gradient(150deg, rgba(0, 255, 65, 0.03) 12%, transparent 12.5%, transparent 87%, rgba(0, 255, 65, 0.03) 87.5%);
+  background-size: 60px 104px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+
+.Area-Of-Focus-Area:hover::before {
+  opacity: 1;
+}
+
+/* Corner brackets */
+.Area-Of-Focus-Area::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-top: 2px solid var(--terminal-green);
+  border-right: 2px solid var(--terminal-green);
+  opacity: 0.3;
+  transition: all 0.3s ease;
+}
+
+.Area-Of-Focus-Area:hover::after {
+  width: 40px;
+  height: 40px;
+  opacity: 1;
+  box-shadow: 0 0 10px var(--terminal-green);
+}
+
+.Area-Of-Focus-Area:hover {
+  transform: translateX(10px);
+  border-color: var(--terminal-green);
+  box-shadow: 
+    0 0 30px rgba(0, 255, 65, 0.3),
+    inset 0 0 60px rgba(0, 255, 65, 0.08);
+  background: rgba(2, 4, 8, 0.95);
+}
+
+.Area-Of-Focus-Area h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin: 0 0 20px 0;
+  color: var(--terminal-green);
+  font-weight: 900;
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 1;
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+}
+
+.Area-Of-Focus-Area h2::before {
+  content: '0x';
+  font-size: 0.7em;
+  opacity: 0.5;
+  margin-right: 8px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.Area-Of-Focus-Area h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--terminal-green);
+  box-shadow: 0 0 8px var(--terminal-green);
+  transition: width 0.4s ease;
+}
+
+.Area-Of-Focus-Area:hover h2::after {
+  width: 100%;
+}
+
+.Area-Of-Focus-Area:nth-child(2):hover h2 {
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+}
+
+.Area-Of-Focus-Area:nth-child(3):hover h2 {
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
+}
+
+.Area-Of-Focus-Area:nth-child(4):hover h2 {
+  color: var(--warning);
+  text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+}
+
+.Area-Of-Focus-Area p {
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+}
+
+.Area-Of-Focus-Area p::first-line {
+  color: var(--neon-blue);
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .Area-Of-Focus-Main {
+    margin: 60px auto;
+    padding: 0 15px 60px;
+  }
+
+  .Area-Of-Focus-Title {
+    margin-bottom: 40px;
+  }
+
+  .Area-Of-Focus-Area {
+    padding: 30px 24px;
+    margin-bottom: 20px;
+  }
+
+  .Area-Of-Focus-Area:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .Area-Of-Focus-Area {
+    padding: 24px 20px;
+  }
+
+  .Area-Of-Focus-Area h2 {
+    margin-bottom: 15px;
+  }
+
+  .Area-Of-Focus-Title::before,
+  .Area-Of-Focus-Title::after {
+    display: none;
+  }
+}

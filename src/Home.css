@@ -1,0 +1,376 @@
+.App {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  position: relative;
+}
+
+/* Hero Image Section */
+.Images {
+  position: relative;
+  margin-bottom: 40px;
+  animation: fadeInScale 1s ease-out;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.Me {
+  height: 180px;
+  width: 180px;
+  border-radius: 50%;
+  border: 3px solid var(--terminal-green);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 65, 0.6),
+    0 0 40px rgba(0, 255, 65, 0.4),
+    inset 0 0 20px rgba(0, 255, 65, 0.2);
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.1) brightness(1.05);
+  transition: filter 0.5s ease-in-out;
+}
+
+.Me:hover {
+  filter: grayscale(0%) contrast(1.1) brightness(1.05);
+}
+
+.Logo {
+  height: 180px;
+  width: 180px;
+  border-radius: 50%;
+  pointer-events: none;
+  border: 3px solid var(--neon-blue);
+  box-shadow: 
+    0 0 20px rgba(0, 217, 255, 0.6),
+    0 0 40px rgba(0, 217, 255, 0.4),
+    inset 0 0 20px rgba(0, 217, 255, 0.2);
+  object-fit: cover;
+  filter: contrast(1.1) brightness(1.05);
+}
+
+/* Main Info Card - Terminal style */
+#main-Div {
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(2, 4, 8, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 8px;
+  padding: 50px 40px;
+  border: 2px solid var(--terminal-green);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 65, 0.3),
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    inset 0 0 60px rgba(0, 255, 65, 0.05);
+  animation: slideUp 0.8s ease-out 0.3s both;
+  position: relative;
+}
+
+/* Terminal header bar */
+#main-Div::before {
+  content: '●●●';
+  position: absolute;
+  top: 12px;
+  left: 15px;
+  color: var(--terminal-green);
+  font-size: 0.6rem;
+  letter-spacing: 4px;
+  opacity: 0.5;
+}
+
+/* Terminal prompt */
+#main-Div::after {
+  content: '> _';
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  color: var(--terminal-green);
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  opacity: 0.5;
+  animation: blink 1s infinite;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.Name {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin: 20px 0 20px 0;
+  background: var(--gradient-hack);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  animation: neonPulse 3s ease-in-out infinite;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.Name:hover {
+  animation: glitch 0.3s infinite, neonPulse 3s ease-in-out infinite;
+}
+
+.Bio {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  line-height: 1.6;
+  color: var(--terminal-green);
+  margin: 20px 0;
+  font-weight: 600;
+  padding: 0 10px;
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.SubBio {
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  line-height: 1.8;
+  color: var(--gray);
+  margin: 30px 0;
+  padding: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  border-left: 3px solid var(--neon-blue);
+  background: rgba(0, 217, 255, 0.05);
+  text-align: left;
+}
+
+.SubBio::before {
+  content: '// PROFILE';
+  display: block;
+  color: var(--neon-blue);
+  font-size: 0.75rem;
+  margin-bottom: 10px;
+  opacity: 0.7;
+  letter-spacing: 2px;
+}
+
+/* Roles Section - Terminal style */
+.Roles {
+  margin: 40px 0 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.Roles h3 {
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  margin: 0;
+  padding: 14px 20px;
+  background: rgba(0, 255, 65, 0.05);
+  border-radius: 4px;
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  border-left: 4px solid var(--terminal-green);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  text-transform: none;
+  color: var(--light);
+}
+
+.Roles h3::before {
+  content: '$ ';
+  color: var(--terminal-green);
+  margin-right: 8px;
+}
+
+.Roles h3::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+
+.Roles h3:hover::after {
+  left: 0;
+  opacity: 0.1;
+}
+
+.Roles h3:hover {
+  border-color: var(--terminal-green);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 65, 0.3),
+    inset 0 0 20px rgba(0, 255, 65, 0.1);
+  transform: translateX(10px);
+  background: rgba(0, 255, 65, 0.08);
+}
+
+.Roles a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
+/* Links Section - Hacker buttons */
+.lines {
+  margin: 30px 0 15px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.item {
+  padding: 12px 24px;
+  color: var(--terminal-green);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid var(--terminal-green);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 
+    0 0 10px rgba(0, 255, 65, 0.2),
+    inset 0 0 10px rgba(0, 255, 65, 0.1);
+}
+
+.item::before {
+  content: '[';
+  position: absolute;
+  left: 8px;
+  transition: all 0.3s ease;
+}
+
+.item::after {
+  content: ']';
+  position: absolute;
+  right: 8px;
+  transition: all 0.3s ease;
+}
+
+.item:hover::before {
+  left: 4px;
+  color: var(--neon-blue);
+}
+
+.item:hover::after {
+  right: 4px;
+  color: var(--neon-blue);
+}
+
+.item:hover {
+  border-color: var(--neon-blue);
+  background: rgba(0, 217, 255, 0.1);
+  box-shadow: 
+    0 0 30px rgba(0, 217, 255, 0.5),
+    inset 0 0 20px rgba(0, 217, 255, 0.2);
+  color: var(--neon-blue);
+  transform: translateY(-3px);
+}
+
+.item:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 0 15px rgba(0, 217, 255, 0.3),
+    inset 0 0 10px rgba(0, 217, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .App-header {
+    padding: 60px 15px;
+  }
+
+  #main-Div {
+    padding: 40px 24px;
+    border-radius: 6px;
+  }
+
+  .Me{
+    height: 140px;
+    width: 140px;
+  }
+
+  .SubBio {
+    padding: 15px;
+  }
+
+  .Roles h3:hover {
+    transform: none;
+  }
+
+  .lines {
+    gap: 10px;
+  }
+
+  .item {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+}
+
+.Me, .Logo {
+  filter: grayscale(100%) contrast(1.2);
+}
+
+@media (max-width: 480px) {
+  .Me, .Logo {
+    height: 120px;
+    width: 120px;
+  }
+
+  #main-Div {
+    padding: 30px 20px;
+  }
+
+  #main-Div::before,
+  #main-Div::after {
+    font-size: 0.6rem;
+  }
+
+  .lines {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .item {
+    width: 100%;
+  }
+
+  .Name {
+    font-size: 2rem;
+  }
+}
