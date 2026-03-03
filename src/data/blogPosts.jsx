@@ -172,164 +172,187 @@ Before we let you in, you’ll need to give us the password:</code></pre>
 `
   },
   //Open Secret
-  {
-    slug: "htb-opensecret-walkthrough",
-    title: "HTB: OpenSecret Walkthrough",
-    date: "2026-03-03",
-    readTime: "7 min read",
-    tags: ["HTB", "Web Security", "JWT", "Pentesting"],
-    excerpt: "A walkthrough of Hack The Box's OpenSecret challenge. We analyze a vulnerable helpdesk portal and exploit insecure JWT handling to retrieve the flag.",
-    content: `
-# HTB: OpenSecret Walkthrough
-
-OpenSecret is a **very easy Hack The Box web challenge** that demonstrates how insecure handling of **JSON Web Tokens (JWTs)** can expose sensitive data in web applications. :contentReference[oaicite:1]{index=1}
-
-In this challenge we interact with a simple helpdesk portal and discover that the authentication mechanism relies on a poorly secured JWT. By analyzing and modifying the token, we can gain access to hidden functionality and retrieve the flag.
-
----
-
-## Video Walkthrough
-
-<div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", borderRadius: "16px" }}>
-  <iframe
-    src="https://www.youtube.com/embed/KwjcqPm-UHA"
-    title="HTB OpenSecret Walkthrough"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-  />
-</div>
-
----
-
-## Challenge Overview
-
-When visiting the challenge application, we are presented with a **helpdesk-style web interface**.
-
-The application allows users to log in and interact with support tickets. However, authentication is handled using a **JWT stored in the browser**, which immediately raises some questions:
-
-- Is the token properly signed?
-- Can it be modified?
-- Does it expose internal secrets?
-
-Understanding how the application trusts the JWT becomes the key to solving the challenge.
-
----
-
-## Step 1: Inspect the Authentication Token
-
-After logging in, we check the browser storage and discover a JWT token.
-
-JWT tokens follow a standard format:
-
-\`\`\`
-HEADER.PAYLOAD.SIGNATURE
-\`\`\`
-
-The payload contains encoded JSON data describing the user.
-
-Example decoded payload:
-
-\`\`\`json
 {
+  slug: "htb-opensecret-walkthrough",
+  title: "HTB: OpenSecret Walkthrough",
+  date: "2026-03-03",
+  readTime: "7 min read",
+  tags: ["HTB", "Web Security", "JWT", "Pentesting"],
+  excerpt:
+    "A walkthrough of Hack The Box's OpenSecret challenge. We analyze a vulnerable helpdesk portal and exploit insecure JWT handling to retrieve the flag.",
+  content: `
+    <h1>HTB: OpenSecret Walkthrough</h1>
+
+    <p>
+      OpenSecret is a <strong>very easy Hack The Box web challenge</strong> that demonstrates how insecure handling of
+      <strong>JSON Web Tokens (JWTs)</strong> can expose sensitive data in web applications.
+    </p>
+
+    <p>
+      In this challenge we interact with a simple helpdesk portal and discover that the authentication mechanism relies on
+      a poorly secured JWT. By analyzing and modifying the token, we can gain access to hidden functionality and retrieve
+      the flag.
+    </p>
+
+    <hr />
+
+    <h2>Video Walkthrough</h2>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px;">
+      <iframe
+        src="https://www.youtube.com/embed/KwjcqPm-UHA"
+        title="HTB OpenSecret Walkthrough"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+      ></iframe>
+    </div>
+
+    <hr />
+
+    <h2>Challenge Overview</h2>
+
+    <p>
+      When visiting the challenge application, we are presented with a <strong>helpdesk-style web interface</strong>.
+      The application allows users to log in and interact with support tickets. However, authentication is handled using a
+      <strong>JWT stored in the browser</strong>, which immediately raises some questions:
+    </p>
+
+    <ul>
+      <li>Is the token properly signed?</li>
+      <li>Can it be modified?</li>
+      <li>Does it expose internal secrets?</li>
+    </ul>
+
+    <p>
+      Understanding how the application trusts the JWT becomes the key to solving the challenge.
+    </p>
+
+    <hr />
+
+    <h2>Step 1: Inspect the Authentication Token</h2>
+
+    <p>
+      After logging in, we check the browser storage and discover a JWT token. JWT tokens follow a standard format:
+    </p>
+
+    <pre><code>HEADER.PAYLOAD.SIGNATURE</code></pre>
+
+    <p>
+      The payload contains encoded JSON data describing the user. For example, a decoded payload might look like:
+    </p>
+
+    <pre><code class="language-json">{
   "username": "guest",
   "role": "user"
-}
-\`\`\`
+}</code></pre>
 
-This immediately suggests a potential privilege escalation opportunity.
+    <p>
+      That <code>role</code> attribute immediately suggests a potential privilege escalation opportunity.
+    </p>
 
----
+    <hr />
 
-## Step 2: Decode the JWT
+    <h2>Step 2: Decode the JWT</h2>
 
-JWTs are **Base64 encoded**, meaning we can decode them easily using tools like:
+    <p>
+      JWTs are <strong>Base64 encoded</strong>, so we can decode them easily using tools like:
+    </p>
 
-- jwt.io
-- Burp Suite
-- base64 utilities
-- browser extensions
+    <ul>
+      <li>jwt.io</li>
+      <li>Burp Suite</li>
+      <li>Base64 utilities</li>
+      <li>Browser extensions</li>
+    </ul>
 
-Once decoded, we inspect the payload fields and notice the **role attribute**.
+    <p>
+      Once decoded, we inspect the payload fields and confirm where the authorization-relevant values live (like
+      <code>role</code>).
+    </p>
 
----
+    <hr />
 
-## Step 3: Modify the Token
+    <h2>Step 3: Modify the Token</h2>
 
-Since the application trusts the JWT, we attempt to modify it.
+    <p>
+      Since the application trusts the JWT, we attempt to modify it. For example, changing the role:
+    </p>
 
-We change:
-
-\`\`\`json
-{
+    <pre><code class="language-json">{
   "username": "guest",
   "role": "admin"
+}</code></pre>
+
+    <p>
+      If the application does not properly validate the token signature, this change can grant administrative privileges.
+      After re-encoding the token and replacing it in the browser, we refresh the application and check what changes.
+    </p>
+
+    <hr />
+
+    <h2>Step 4: Access Hidden Functionality</h2>
+
+    <p>
+      With the modified token, the application may reveal new functionality that was previously hidden from normal users,
+      such as:
+    </p>
+
+    <ul>
+      <li>Administrative endpoints</li>
+      <li>Internal system data</li>
+      <li>Hidden helpdesk resources</li>
+    </ul>
+
+    <p>
+      From there, we enumerate the newly accessible pages and locate the flag exposed within the admin functionality.
+    </p>
+
+    <hr />
+
+    <h2>Why This Vulnerability Happens</h2>
+
+    <p>
+      JWT issues commonly occur when applications:
+    </p>
+
+    <ul>
+      <li>Fail to verify the token signature</li>
+      <li>Accept unsigned tokens</li>
+      <li>Trust client-controlled fields like roles and permissions</li>
+      <li>Use weak or exposed signing secrets</li>
+    </ul>
+
+    <p>
+      The lesson is simple: <strong>the client should never be able to grant itself privileges</strong>.
+    </p>
+
+    <hr />
+
+    <h2>Tools Used</h2>
+
+    <ul>
+      <li>Browser Developer Tools</li>
+      <li>JWT decoding tools</li>
+      <li>Base64 decoding</li>
+      <li>Basic HTTP inspection</li>
+    </ul>
+
+    <hr />
+
+    <h2>Takeaways</h2>
+
+    <ol>
+      <li>Never trust client-side tokens without proper verification.</li>
+      <li>Always validate JWT signatures.</li>
+      <li>Avoid relying solely on token payload fields for authorization.</li>
+      <li>Simple web apps can expose critical secrets if authentication is weak.</li>
+    </ol>
+
+    <p>
+      OpenSecret is a great intro to JWT testing and authentication pitfalls. More HTB walkthroughs coming soon.
+    </p>
+  `
 }
-\`\`\`
-
-If the application does not properly validate the token signature, this change will grant administrative privileges.
-
-After re-encoding the token and replacing it in the browser, we refresh the application.
-
----
-
-## Step 4: Access Hidden Functionality
-
-With the modified token, the application reveals new functionality that was previously hidden from normal users.
-
-This includes:
-
-- Administrative endpoints
-- Internal system data
-- Hidden helpdesk resources
-
-Exploring these pages eventually exposes the **flag** embedded within the admin interface.
-
----
-
-## Why This Vulnerability Happens
-
-JWT vulnerabilities usually occur when applications:
-
-- Fail to verify the token signature
-- Accept unsigned tokens
-- Trust client-controlled fields such as roles
-- Use weak or exposed signing secrets
-
-Because the application blindly trusted the token payload, modifying it allowed us to escalate privileges.
-
----
-
-## Tools Used
-
-During this challenge we used simple web security tools:
-
-- Browser Developer Tools
-- JWT decoding tools
-- Base64 decoding
-- Basic HTTP inspection
-
-No advanced exploitation framework was required.
-
----
-
-## Takeaways
-
-OpenSecret highlights an extremely common real-world mistake in web development.
-
-Key lessons:
-
-1. Never trust client-side tokens without proper verification.
-2. Always validate JWT signatures.
-3. Avoid embedding authorization logic entirely in the token payload.
-4. Even simple web apps can expose critical secrets if authentication is weak.
-
-This challenge is a great introduction to **JWT attacks and web authentication testing**.
-
-If you're learning web security, vulnerabilities like this appear frequently in real-world penetration tests.
-
-More Hack The Box walkthroughs coming soon.
-`
-  }
 ];
