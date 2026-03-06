@@ -354,5 +354,169 @@ Before we let you in, you’ll need to give us the password:</code></pre>
       OpenSecret is a great intro to JWT testing and authentication pitfalls. More HTB walkthroughs coming soon.
     </p>
   `
+},
+//Oddly Even
+{
+  slug: "htb-oddly-even-walkthrough",
+  title: "HTB: Oddly Even Walkthrough",
+  date: "2026-03-05",
+  readTime: "5 min read",
+  tags: ["HTB", "Coding", "Python", "Beginner"],
+  excerpt:
+    "A simple Hack The Box coding challenge focused on basic conditional logic. Take a number as input and print whether it is odd or even.",
+  content: `
+    <h1>HTB: Oddly Even Walkthrough</h1>
+
+    <p>
+      Oddly Even is a beginner-friendly <strong>Hack The Box coding challenge</strong> centered around a very simple task:
+      take in a number, determine whether it is divisible by 2, and print either <code>even</code> or <code>odd</code>.
+    </p>
+
+    <p>
+      Challenges like this are simple on purpose. They reinforce the kind of fast, clean logic you need when solving coding
+      problems under pressure, especially in CTF-style environments.
+    </p>
+
+    <hr />
+
+    <h2>Video Walkthrough</h2>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px;">
+      <iframe
+        src="https://www.youtube.com/embed/jUaUv01KpyM"
+        title="HTB Oddly Even Walkthrough"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+      ></iframe>
+    </div>
+
+    <hr />
+
+    <h2>Challenge Overview</h2>
+
+    <p>
+      The objective is straightforward:
+    </p>
+
+    <ul>
+      <li>Read a number from input</li>
+      <li>Check whether the number is divisible by 2</li>
+      <li>Print <code>even</code> if it is</li>
+      <li>Print <code>odd</code> if it is not</li>
+    </ul>
+
+    <p>
+      This is one of the most basic conditional programming patterns, but it shows up everywhere. If you can write this
+      quickly and correctly, you are building the kind of muscle memory that makes harder challenges easier later on.
+    </p>
+
+    <hr />
+
+    <h2>Step 1: Read the Input</h2>
+
+    <p>
+      The first step is taking in the number. In Python, that usually means using <code>input()</code> and converting the
+      result into an integer:
+    </p>
+
+    <pre><code class="language-python">n = int(input())</code></pre>
+
+    <p>
+      Since <code>input()</code> returns a string, converting it with <code>int()</code> is important before performing
+      arithmetic.
+    </p>
+
+    <hr />
+
+    <h2>Step 2: Check Divisibility</h2>
+
+    <p>
+      To determine whether a number is even, we use the modulo operator:
+    </p>
+
+    <pre><code class="language-python">n % 2</code></pre>
+
+    <p>
+      If the result is <code>0</code>, the number is even. Otherwise, it is odd.
+    </p>
+
+    <p>
+      That gives us the core condition:
+    </p>
+
+    <pre><code class="language-python">if n % 2 == 0:
+    print("even")
+else:
+    print("odd")</code></pre>
+
+    <hr />
+
+    <h2>Full Solution</h2>
+
+    <p>
+      Putting it together, the full Python solution looks like this:
+    </p>
+
+    <pre><code class="language-python">n = int(input())
+
+if n % 2 == 0:
+    print("even")
+else:
+    print("odd")</code></pre>
+
+    <hr />
+
+    <h2>Why This Works</h2>
+
+    <p>
+      Every integer is either divisible by 2 or it is not. That makes this a clean binary decision:
+    </p>
+
+    <ul>
+      <li>If <code>n % 2 == 0</code>, print <code>even</code></li>
+      <li>Otherwise, print <code>odd</code></li>
+    </ul>
+
+    <p>
+      It is simple, but it reinforces a core habit in security and coding work: break the problem into an input, a test,
+      and an output.
+    </p>
+
+    <hr />
+
+    <h2>Common Beginner Mistakes</h2>
+
+    <ul>
+      <li>Forgetting to convert the input from a string to an integer</li>
+      <li>Printing <code>Even</code> or <code>Odd</code> instead of the exact lowercase output required</li>
+      <li>Overcomplicating the solution instead of using a direct modulo check</li>
+    </ul>
+
+    <p>
+      In coding challenges, correctness matters more than cleverness. Clean and minimal usually wins.
+    </p>
+
+    <hr />
+
+    <h2>Takeaways</h2>
+
+    <ol>
+      <li>Read the input carefully</li>
+      <li>Use modulo to test divisibility</li>
+      <li>Match the expected output format exactly</li>
+      <li>Build speed with simple logic problems like this</li>
+    </ol>
+
+    <p>
+      Oddly Even is a small challenge, but that is exactly why it is useful. The fundamentals are what make bigger wins
+      possible later.
+    </p>
+
+    <p>
+      More HTB walkthroughs coming soon.
+    </p>
+  `
 }
 ];
