@@ -518,5 +518,205 @@ else:
       More HTB walkthroughs coming soon.
     </p>
   `
+},
+//Flag Command
+{
+  slug: "htb-flag-command-walkthrough",
+  title: "HTB: Flag Command Walkthrough",
+  date: "2026-03-05",
+  readTime: "6 min read",
+  tags: ["HTB", "Web Security", "CTF", "Beginner"],
+  excerpt:
+    "A walkthrough of Hack The Box's Flag Command challenge, a very easy web challenge built around a terminal-style interface and careful input handling.",
+  content: `
+    <h1>HTB: Flag Command Walkthrough</h1>
+
+    <p>
+      Flag Command is a beginner-friendly <strong>Hack The Box web challenge</strong> with a terminal-style interface that
+      rewards careful observation, simple testing, and clean reasoning.
+    </p>
+
+    <p>
+      One of the best things about easier HTB web challenges is that they teach a habit that scales well into harder work:
+      slow down, inspect what the application is really doing, and test assumptions one at a time.
+    </p>
+
+    <hr />
+
+    <h2>Video Walkthrough</h2>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px;">
+      <iframe
+        src="https://www.youtube.com/embed/GcWWLoLIsIA"
+        title="HTB Flag Command Walkthrough"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+      ></iframe>
+    </div>
+
+    <hr />
+
+    <h2>Challenge Overview</h2>
+
+    <p>
+      The challenge presents a web application that looks and feels like a command terminal. That kind of interface is
+      immediately interesting because it suggests the application may be taking user input, processing commands, and
+      returning output dynamically.
+    </p>
+
+    <p>
+      In challenges like this, the first goal is not to guess the exploit immediately. The first goal is to understand the
+      rules of the application:
+    </p>
+
+    <ul>
+      <li>What input is accepted?</li>
+      <li>What output is returned?</li>
+      <li>Are there blocked words or restricted commands?</li>
+      <li>Is the backend interpreting input directly or sanitizing it first?</li>
+    </ul>
+
+    <p>
+      Once we understand that, the path to the flag becomes much clearer.
+    </p>
+
+    <hr />
+
+    <h2>Step 1: Interact With the Terminal Interface</h2>
+
+    <p>
+      The first step is simply to play with the application. Enter normal-looking commands, observe the responses, and look
+      for patterns in how the site reacts.
+    </p>
+
+    <p>
+      This kind of probing helps answer important questions:
+    </p>
+
+    <ul>
+      <li>Does the app simulate a terminal, or does it actually process input on the backend?</li>
+      <li>Do invalid commands return generic errors?</li>
+      <li>Are some commands accepted while others are blocked?</li>
+    </ul>
+
+    <p>
+      Even basic recon like this can reveal whether the challenge is about command handling, filtering, or hidden
+      functionality.
+    </p>
+
+    <hr />
+
+    <h2>Step 2: Look for Input Handling Weaknesses</h2>
+
+    <p>
+      Terminal-themed web challenges often come down to how user input is interpreted. If the application accepts user input
+      and passes it into backend logic insecurely, that can open the door to unintended behavior.
+    </p>
+
+    <p>
+      Common things to test include:
+    </p>
+
+    <ul>
+      <li>Unexpected spacing or separators</li>
+      <li>Alternate command formats</li>
+      <li>Partial commands or edge cases</li>
+      <li>How the application handles blocked or malformed input</li>
+    </ul>
+
+    <p>
+      The key idea is simple: if the app expects one kind of input, try nearby variations and see where the assumptions
+      break.
+    </p>
+
+    <hr />
+
+    <h2>Step 3: Enumerate What the App Is Trying to Hide</h2>
+
+    <p>
+      Once it becomes clear that the interface is more than just cosmetic, the next step is enumeration. We want to find
+      hidden behaviors, protected functionality, or restricted access paths that could lead to the flag.
+    </p>
+
+    <p>
+      In web challenges, that usually means paying close attention to:
+    </p>
+
+    <ul>
+      <li>Error messages</li>
+      <li>Differences between valid and invalid requests</li>
+      <li>Frontend behavior versus backend responses</li>
+      <li>Any clues that suggest server-side filtering or command parsing</li>
+    </ul>
+
+    <p>
+      Small differences in output often expose exactly where the weakness lives.
+    </p>
+
+    <hr />
+
+    <h2>Step 4: Trigger the Intended Behavior and Recover the Flag</h2>
+
+    <p>
+      After identifying how the input is handled, the final step is to use that understanding to reach the protected
+      functionality and retrieve the flag.
+    </p>
+
+    <p>
+      Like many beginner HTB challenges, the real lesson is less about a complicated exploit and more about disciplined
+      testing. The application gives you everything you need — but only if you pay attention to how it responds.
+    </p>
+
+    <hr />
+
+    <h2>Why This Challenge Is Useful</h2>
+
+    <p>
+      Flag Command is valuable because it teaches a real security habit: do not get hypnotized by the theme of the app.
+      Whether it looks like a game, a terminal, or a dashboard, user input is still user input.
+    </p>
+
+    <p>
+      If input reaches backend logic in an unsafe way, the interface design does not matter. The weakness is still there.
+    </p>
+
+    <hr />
+
+    <h2>Tools Used</h2>
+
+    <ul>
+      <li>Browser</li>
+      <li>Developer Tools</li>
+      <li>Careful manual testing</li>
+      <li>Basic web enumeration</li>
+    </ul>
+
+    <p>
+      This is another good reminder that not every challenge requires a huge toolset. Sometimes browser-based observation is
+      enough.
+    </p>
+
+    <hr />
+
+    <h2>Takeaways</h2>
+
+    <ol>
+      <li>Start by understanding the app's input and output rules.</li>
+      <li>Look closely at how user input is filtered and interpreted.</li>
+      <li>Use small test cases to expose hidden behavior.</li>
+      <li>In easier web challenges, patient enumeration usually beats overthinking.</li>
+    </ol>
+
+    <p>
+      Flag Command is a solid beginner challenge because it reinforces the kind of clean testing mindset that carries over
+      into real-world web assessments.
+    </p>
+
+    <p>
+      More HTB walkthroughs coming soon.
+    </p>
+  `
 }
 ];
