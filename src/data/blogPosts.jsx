@@ -719,15 +719,15 @@ else:
     </p>
   `
   },
-{
-  slug: "htb-extraterrestrial-persistence-walkthrough",
-  title: "HTB: Extraterrestrial Persistence Walkthrough",
-  date: "2026-03-06",
-  readTime: "6 min read",
-  tags: ["HTB", "Forensics", "Linux", "Persistence"],
-  excerpt:
-    "A walkthrough of Hack The Box's Extraterrestrial Persistence challenge. We analyze a suspicious bash script and uncover a hidden systemd persistence mechanism containing the flag.",
-  content: `
+  {
+    slug: "htb-extraterrestrial-persistence-walkthrough",
+    title: "HTB: Extraterrestrial Persistence Walkthrough",
+    date: "2026-03-06",
+    readTime: "6 min read",
+    tags: ["HTB", "Forensics", "Linux", "Persistence"],
+    excerpt:
+      "A walkthrough of Hack The Box's Extraterrestrial Persistence challenge. We analyze a suspicious bash script and uncover a hidden systemd persistence mechanism containing the flag.",
+    content: `
     <h1>HTB: Extraterrestrial Persistence Walkthrough</h1>
 
     <p>
@@ -905,5 +905,188 @@ Description=HTB{th3s3_4l13nS_4r3_s00000_b4s1c}</code></pre>
       More Hack The Box walkthroughs coming soon.
     </p>
   `
-}
+  },
+  {
+    slug: "htb-baby-bonechewercon-walkthrough",
+    title: "HTB: baby BoneChewerCon Walkthrough",
+    date: "2026-03-07",
+    readTime: "6 min read",
+    tags: ["HTB", "Web Security", "SSTI", "CTF"],
+    excerpt:
+      "A walkthrough of Hack The Box's baby BoneChewerCon challenge. We exploit a Server-Side Template Injection vulnerability to execute commands and retrieve the flag.",
+    content: `
+    <h1>HTB: baby BoneChewerCon Walkthrough</h1>
+
+    <p>
+      baby BoneChewerCon is a <strong>very easy Hack The Box web challenge</strong> designed to introduce players to
+      <strong>Server-Side Template Injection (SSTI)</strong>. The challenge simulates a simple event registration website
+      for the fictional BoneChewerCon conference.
+    </p>
+
+    <p>
+      At first glance the site looks harmless — a basic form to register your name and email for the event. But
+      underneath the surface, the application is rendering user input directly inside a server-side template.
+    </p>
+
+    <p>
+      That small mistake opens the door to full server-side code execution.
+    </p>
+
+    <hr />
+
+    <h2>Video Walkthrough</h2>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px;">
+      <iframe
+        src="https://www.youtube.com/embed/OZ2yKJhaX4I"
+        title="HTB baby BoneChewerCon Walkthrough"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+      ></iframe>
+    </div>
+
+    <hr />
+
+    <h2>Challenge Overview</h2>
+
+    <p>
+      The application allows users to submit a name when registering for the conference.
+      Whatever value we enter is rendered back to us in the response.
+    </p>
+
+    <p>
+      When input is rendered inside a template engine without sanitization, it can sometimes be interpreted as template
+      code rather than plain text.
+    </p>
+
+    <p>
+      This is exactly what happens here.
+    </p>
+
+    <hr />
+
+    <h2>Step 1: Test Template Injection</h2>
+
+    <p>
+      A common way to test for template injection is to input template expressions.
+    </p>
+
+    <p>
+      For example:
+    </p>
+
+    <pre><code>{{7*7}}</code></pre>
+
+    <p>
+      If the application simply prints this as text, the template engine is likely safe.
+      But if it evaluates the expression and prints <code>49</code>, the input is being executed inside the template.
+    </p>
+
+    <p>
+      In this challenge, the expression is evaluated — confirming an SSTI vulnerability.
+    </p>
+
+    <hr />
+
+    <h2>Step 2: Identify the Template Engine</h2>
+
+    <p>
+      The syntax used by the application matches <strong>Twig</strong>, a popular template engine used in PHP frameworks.
+    </p>
+
+    <p>
+      Twig allows filters that can execute system commands if the environment is insecurely configured.
+    </p>
+
+    <p>
+      This means we may be able to run commands directly on the server.
+    </p>
+
+    <hr />
+
+    <h2>Step 3: Execute Commands</h2>
+
+    <p>
+      By abusing Twig filters, we can execute system commands.
+    </p>
+
+    <p>
+      One working payload is:
+    </p>
+
+    <pre><code>{{['cat /flag']|filter('system')}}</code></pre>
+
+    <p>
+      This payload forces the template engine to execute the <code>cat /flag</code> command on the server.
+    </p>
+
+    <p>
+      When the command runs, the server prints the contents of the flag file directly in the page output. :contentReference[oaicite:1]{index=1}
+    </p>
+
+    <hr />
+
+    <h2>Retrieve the Flag</h2>
+
+    <p>
+      After submitting the payload, the server returns the flag:
+    </p>
+
+    <pre><code>HTB{...flag...}</code></pre>
+
+    <p>
+      The challenge is solved.
+    </p>
+
+    <hr />
+
+    <h2>Why This Vulnerability Happens</h2>
+
+    <p>
+      Server-Side Template Injection occurs when user input is rendered directly into a template engine
+      without proper escaping or sanitization.
+    </p>
+
+    <p>
+      Because template engines often allow logic, loops, and filters, attackers may be able to escalate
+      from simple expression evaluation to full remote command execution.
+    </p>
+
+    <p>
+      In real-world applications, this type of vulnerability can lead to complete server compromise.
+    </p>
+
+    <hr />
+
+    <h2>Tools Used</h2>
+
+    <ul>
+      <li>Web browser</li>
+      <li>Manual payload testing</li>
+      <li>Understanding of template engines</li>
+    </ul>
+
+    <hr />
+
+    <h2>Takeaways</h2>
+
+    <ol>
+      <li>Never render raw user input directly inside templates.</li>
+      <li>Template engines can become code execution vectors if misconfigured.</li>
+      <li>SSTI vulnerabilities can escalate quickly from simple testing to full command execution.</li>
+      <li>Even very small web applications can expose critical vulnerabilities.</li>
+    </ol>
+
+    <p>
+      baby BoneChewerCon is a great introduction to SSTI vulnerabilities and why input sanitization is
+      critical in server-side applications.
+    </p>
+
+    <p>
+      More Hack The Box walkthroughs coming soon.
+    </p>
+  `
+  }
 ];
