@@ -1088,5 +1088,159 @@ Description=HTB{th3s3_4l13nS_4r3_s00000_b4s1c}</code></pre>
       More Hack The Box walkthroughs coming soon.
     </p>
   `
+  },
+  {
+    slug: "htb-trapped-source-walkthrough",
+    title: "HTB: Trapped Source Walkthrough",
+    date: "2026-03-08",
+    readTime: "5 min read",
+    tags: ["HTB", "Web Security", "DevTools", "Beginner"],
+    excerpt:
+      "A walkthrough of Hack The Box's Trapped Source challenge. By inspecting the page source and using browser developer tools, we uncover a hidden PIN and retrieve the flag.",
+    content: `
+    <h1>HTB: Trapped Source Walkthrough</h1>
+
+    <p>
+      Trapped Source is a <strong>very easy Hack The Box web challenge</strong> that demonstrates a classic lesson in
+      security testing: sometimes the answer is hiding directly in the page source.
+    </p>
+
+    <p>
+      The application presents a keypad interface that requires a four-digit PIN to unlock the flag.
+      Instead of brute forcing the code, the solution comes from inspecting the HTML and JavaScript
+      behind the page.
+    </p>
+
+    <hr />
+
+    <h2>Video Walkthrough</h2>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px;">
+      <iframe
+        src="https://www.youtube.com/embed/8t1qLDptcWk"
+        title="HTB Trapped Source Walkthrough"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+      ></iframe>
+    </div>
+
+    <hr />
+
+    <h2>Challenge Overview</h2>
+
+    <p>
+      When loading the challenge page, we see a simple interface with a numeric keypad and a prompt
+      asking for a four-digit PIN.
+    </p>
+
+    <p>
+      Entering random values simply returns an "invalid" message.
+    </p>
+
+    <p>
+      Since brute forcing is inefficient and there is no additional functionality exposed in the UI,
+      the logical next step is to inspect the underlying source code.
+    </p>
+
+    <hr />
+
+    <h2>Step 1: View the Page Source</h2>
+
+    <p>
+      In web challenges, the fastest reconnaissance step is often:
+    </p>
+
+    <pre><code>Right Click → View Page Source</code></pre>
+
+    <p>
+      Looking through the HTML and JavaScript reveals configuration values used by the application.
+      In this case, the correct PIN is exposed directly inside the page configuration.
+    </p>
+
+    <pre><code>correctPin: "8291"</code></pre>
+
+    <p>
+      The developer accidentally left the PIN in the client-side script.
+    </p>
+
+    <hr />
+
+    <h2>Step 2: Enter the Correct PIN</h2>
+
+    <p>
+      With the PIN identified, we simply enter the code into the keypad interface.
+    </p>
+
+    <p>
+      Once the correct value is submitted, the application reveals the flag.
+    </p>
+
+    <p>
+      However, the flag is embedded inside the page in a way that makes it difficult to copy directly
+      from the UI.
+    </p>
+
+    <hr />
+
+    <h2>Step 3: Use Developer Tools</h2>
+
+    <p>
+      To retrieve the flag cleanly, we open the browser developer tools.
+    </p>
+
+    <pre><code>F12 → Inspect Element</code></pre>
+
+    <p>
+      Inspecting the HTML reveals the flag element inside the DOM, allowing us to copy it directly.
+    </p>
+
+    <pre><code>HTB{V13w_50urc3_c4n_b3_u53ful!!!}</code></pre>
+
+    <hr />
+
+    <h2>Why This Works</h2>
+
+    <p>
+      The vulnerability exists because sensitive information was left inside client-side code.
+      Anything sent to the browser should be considered public information.
+    </p>
+
+    <p>
+      If secrets are embedded in JavaScript or HTML, they can be discovered by anyone using
+      developer tools.
+    </p>
+
+    <hr />
+
+    <h2>Tools Used</h2>
+
+    <ul>
+      <li>Web browser</li>
+      <li>View Page Source</li>
+      <li>Browser Developer Tools</li>
+    </ul>
+
+    <hr />
+
+    <h2>Takeaways</h2>
+
+    <ol>
+      <li>Never store secrets in client-side code.</li>
+      <li>Always inspect the page source when solving web challenges.</li>
+      <li>Browser developer tools are extremely powerful during web testing.</li>
+      <li>Simple reconnaissance often solves beginner CTF challenges.</li>
+    </ol>
+
+    <p>
+      Trapped Source is a great reminder that sometimes the easiest solution is simply
+      looking at the source code.
+    </p>
+
+    <p>
+      More Hack The Box walkthroughs coming soon.
+    </p>
+  `
   }
 ];
