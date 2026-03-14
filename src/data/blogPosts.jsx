@@ -1242,5 +1242,158 @@ Description=HTB{th3s3_4l13nS_4r3_s00000_b4s1c}</code></pre>
       More Hack The Box walkthroughs coming soon.
     </p>
   `
-  }
+  },
+  {
+  slug: "htb-alien-cradle-walkthrough",
+  title: "HTB: Alien Cradle Walkthrough",
+  date: "2026-03-08",
+  readTime: "5 min read",
+  tags: ["HTB", "Forensics", "PowerShell", "Beginner"],
+  excerpt:
+    "A walkthrough of Hack The Box's Alien Cradle challenge. We inspect an obfuscated PowerShell cradle script, deobfuscate the payload, and recover the hidden flag.",
+  content: `
+    <h1>HTB: Alien Cradle Walkthrough</h1>
+
+    <p>
+      Alien Cradle is a <strong>very easy Hack The Box forensics challenge</strong> focused on analyzing an obfuscated
+      <strong>PowerShell cradle</strong>. The challenge gives us a script and asks us to determine what it is doing and
+      where the flag is hidden.
+    </p>
+
+    <p>
+      This is a great beginner challenge because it reinforces an important lesson in incident response and malware
+      analysis: not every suspicious script needs to be executed. Sometimes the safest and fastest path is to just
+      read the code carefully.
+    </p>
+
+    <hr />
+
+    <h2>Video Walkthrough</h2>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px;">
+      <iframe
+        src="https://www.youtube.com/embed/UaYRnNv7gxc"
+        title="HTB Alien Cradle Walkthrough"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+      ></iframe>
+    </div>
+
+    <hr />
+
+    <h2>Challenge Overview</h2>
+
+    <p>
+      The provided artifact is a PowerShell script, commonly referred to as a <em>cradle</em>. In real-world attacks,
+      PowerShell cradles are often used to download and execute a second-stage payload from a remote server. In this
+      case, however, the script has been obfuscated and needs to be inspected manually. 
+    </p>
+
+    <p>
+      Public writeups for Alien Cradle describe the challenge exactly this way: a PowerShell script with the flag
+      hidden in obfuscated string concatenation rather than requiring execution. 
+    </p>
+
+    <hr />
+
+    <h2>Step 1: Open the Script</h2>
+
+    <p>
+      The first thing to do is open the PowerShell file in a text editor and look for suspicious patterns.
+    </p>
+
+    <p>
+      Right away, the script appears messy and intentionally confusing. But instead of focusing on the entire file at
+      once, break it into pieces and look for repeated string-building behavior.
+    </p>
+
+    <p>
+      In this challenge, the script contains a sequence of string fragments joined together with <code>+</code> signs.
+      That is the key clue.
+    </p>
+
+    <hr />
+
+    <h2>Step 2: Identify the Obfuscation Pattern</h2>
+
+    <p>
+      One of the classic PowerShell obfuscation tricks is to split important strings into many smaller pieces and then
+      concatenate them at runtime.
+    </p>
+
+    <p>
+      Instead of writing the final value directly, the script may look something like this:
+    </p>
+
+    <pre><code class="language-powershell">$x = "HTB" + "{p0w3r" + "sh3ll_" + "Cr4dl3s" + "_c4n_" + "g3t_" + "th3_" + "j0b_" + "d0n3}"</code></pre>
+
+    <p>
+      Once you recognize that pattern, the challenge becomes much simpler. You do not need to execute the script at all.
+      You only need to reconstruct the final string.
+    </p>
+
+    <hr />
+
+    <h2>Step 3: Rebuild the Hidden String</h2>
+
+    <p>
+      By removing the concatenation operators and joining the string fragments in order, the hidden value becomes visible.
+    </p>
+
+    <p>
+      Multiple public writeups note that the flag is directly present in the script and simply separated by plus signs.
+      Reassembling those fragments reveals the final flag. :contentReference[oaicite:1]{index=1}
+    </p>
+
+    <pre><code>HTB{p0w3rsh3ll_Cr4dl3s_c4n_g3t_th3_j0b_d0n3}</code></pre>
+
+    <hr />
+
+    <h2>Why This Works</h2>
+
+    <p>
+      The challenge relies on lightweight obfuscation rather than encryption or advanced malware behavior. The attacker
+      is trying to hide meaningful strings from casual inspection, but the logic is still readable once you slow down
+      and inspect how the script builds its output. :contentReference[oaicite:2]{index=2}
+    </p>
+
+    <p>
+      This mirrors a real-world defensive skill: many malicious scripts use string concatenation, encoding, or variable
+      indirection to hide obvious indicators. Analysts who understand these patterns can often recover key information
+      without ever detonating the sample.
+    </p>
+
+    <hr />
+
+    <h2>Tools Used</h2>
+
+    <ul>
+      <li>Text editor</li>
+      <li>Basic PowerShell reading</li>
+      <li>Manual deobfuscation</li>
+    </ul>
+
+    <hr />
+
+    <h2>Takeaways</h2>
+
+    <ol>
+      <li>Do not rush to execute suspicious scripts.</li>
+      <li>String concatenation is a very common obfuscation technique.</li>
+      <li>Simple manual analysis can beat lightweight malware obfuscation.</li>
+      <li>Beginner forensics challenges often reward careful reading more than advanced tooling.</li>
+    </ol>
+
+    <p>
+      Alien Cradle is a great introduction to script analysis and PowerShell deobfuscation. It is simple, but it teaches
+      exactly the kind of habit that matters in real malware triage: inspect first, execute never unless you truly need to.
+    </p>
+
+    <p>
+      More Hack The Box walkthroughs coming soon.
+    </p>
+  `
+}
 ];
