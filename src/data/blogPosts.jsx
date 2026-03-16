@@ -1395,5 +1395,179 @@ Description=HTB{th3s3_4l13nS_4r3_s00000_b4s1c}</code></pre>
       More Hack The Box walkthroughs coming soon.
     </p>
   `
+},
+{
+  slug: "htb-locked-away-walkthrough",
+  title: "HTB: Locked Away Walkthrough",
+  date: "2026-03-08",
+  readTime: "6 min read",
+  tags: ["HTB", "Python", "PyJail", "Beginner"],
+  excerpt:
+    "A walkthrough of Hack The Box's Locked Away challenge. We analyze a restricted Python environment, bypass a blacklist, and execute the hidden flag-reading function.",
+  content: `
+    <h1>HTB: Locked Away Walkthrough</h1>
+
+    <p>
+      Locked Away is an <strong>easy Hack The Box Python jail challenge</strong> built around a classic mistake:
+      user-controlled input is filtered with a blacklist and then passed into Python execution anyway.
+    </p>
+
+    <p>
+      Challenges like this are a great introduction to <strong>PyJail</strong> thinking. The goal is not brute force.
+      The goal is to understand the restrictions, identify what is still under your control, and then turn that tiny gap
+      into code execution.
+    </p>
+
+    <hr />
+
+    <h2>Video Walkthrough</h2>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px;">
+      <iframe
+        src="https://www.youtube.com/embed/GwBybhnDhj0"
+        title="HTB Locked Away Walkthrough"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+      ></iframe>
+    </div>
+
+    <hr />
+
+    <h2>Challenge Overview</h2>
+
+    <p>
+      The challenge gives us a restricted Python environment. Our input is checked against a blacklist, and if it passes,
+      it gets executed. That setup is the entire vulnerability.
+    </p>
+
+    <p>
+      Blacklists feel safe to developers because they seem like they block dangerous words and characters. But in Python,
+      there are usually many ways to express the same behavior. If execution is still allowed at all, the blacklist often
+      becomes the weakest part of the system.
+    </p>
+
+    <hr />
+
+    <h2>Step 1: Read the Source Carefully</h2>
+
+    <p>
+      In PyJail-style challenges, source code analysis matters more than guessing payloads. We want to answer a few
+      important questions first:
+    </p>
+
+    <ul>
+      <li>What exactly is blacklisted?</li>
+      <li>Is input evaluated with <code>exec</code> or <code>eval</code>?</li>
+      <li>Are useful functions already defined for us?</li>
+      <li>Can we modify variables before the sensitive function is called?</li>
+    </ul>
+
+    <p>
+      Public writeups for Locked Away note that the challenge provides the Python source, applies a blacklist check to the
+      input, and then executes that input. They also note that a function already exists to open the chest and retrieve
+      the flag. :contentReference[oaicite:1]{index=1}
+    </p>
+
+    <hr />
+
+    <h2>Step 2: Understand Why the Blacklist Fails</h2>
+
+    <p>
+      The core issue is that the program still trusts user input enough to execute it. Once that happens, the blacklist
+      has to be perfect, and in practice it almost never is.
+    </p>
+
+    <p>
+      In Locked Away, the intended trick is to manipulate the blacklist itself before using the hidden function. Multiple
+      public writeups describe solving the challenge by reassigning or clearing the blacklist and then calling the
+      flag-reading function directly. :contentReference[oaicite:2]{index=2}
+    </p>
+
+    <hr />
+
+    <h2>Step 3: Override the Blacklist</h2>
+
+    <p>
+      Since the blacklist is just a Python object in memory, one simple approach is to replace it with something harmless.
+      For example:
+    </p>
+
+    <pre><code class="language-python">blacklist = [1, 2, 3]</code></pre>
+
+    <p>
+      The exact replacement value is not especially important. What matters is that it no longer contains the strings the
+      program expects to block.
+    </p>
+
+    <p>
+      Once the blacklist is neutralized, we regain access to functionality that was supposed to be restricted.
+    </p>
+
+    <hr />
+
+    <h2>Step 4: Call the Hidden Function</h2>
+
+    <p>
+      After bypassing the restriction, the next step is to invoke the function that opens the chest and reveals the flag.
+      Public writeups reference this function as <code>open_chest()</code>. :contentReference[oaicite:3]{index=3}
+    </p>
+
+    <pre><code class="language-python">blacklist = [1, 2, 3]; open_chest()</code></pre>
+
+    <p>
+      Once that runs, the challenge returns the flag and the PyJail is defeated.
+    </p>
+
+    <hr />
+
+    <h2>Why This Challenge Is Useful</h2>
+
+    <p>
+      Locked Away teaches a real lesson that goes far beyond CTFs: <strong>blacklisting dangerous input is not the same as
+      building a secure execution model</strong>.
+    </p>
+
+    <p>
+      If untrusted input reaches an interpreter, attackers only need one path through. In expressive languages like Python,
+      there are usually many.
+    </p>
+
+    <p>
+      The challenge is also a great entry point into PyJail thinking: inspect the source, map the restrictions, find what
+      remains mutable, and then pivot from that weakness into the intended sensitive behavior. :contentReference[oaicite:4]{index=4}
+    </p>
+
+    <hr />
+
+    <h2>Tools Used</h2>
+
+    <ul>
+      <li>Source code analysis</li>
+      <li>Basic Python knowledge</li>
+      <li>Manual payload construction</li>
+    </ul>
+
+    <hr />
+
+    <h2>Takeaways</h2>
+
+    <ol>
+      <li>Blacklists are fragile security controls.</li>
+      <li>If user input is still executed, the application is usually still exploitable.</li>
+      <li>PyJail challenges reward careful reading more than random payload guessing.</li>
+      <li>Mutable program state can often be turned against the restriction itself.</li>
+    </ol>
+
+    <p>
+      Locked Away is a clean beginner PyJail challenge because it teaches the exact habit that matters most:
+      do not focus only on what is blocked — focus on what is still possible.
+    </p>
+
+    <p>
+      More Hack The Box walkthroughs coming soon.
+    </p>
+  `
 }
 ];
