@@ -1569,5 +1569,195 @@ Description=HTB{th3s3_4l13nS_4r3_s00000_b4s1c}</code></pre>
       More Hack The Box walkthroughs coming soon.
     </p>
   `
+},
+{
+  slug: "htb-reverse-walkthrough",
+  title: "HTB: Reverse Walkthrough",
+  date: "2026-03-08",
+  readTime: "5 min read",
+  tags: ["HTB", "Reversing", "Binary Analysis", "Beginner"],
+  excerpt:
+    "A walkthrough of Hack The Box's Reverse challenge. We inspect a small binary, study how it transforms input, and work backward to recover the correct value and solve the challenge.",
+  content: `
+    <h1>HTB: Reverse Walkthrough</h1>
+
+    <p>
+      Reverse is a beginner-friendly <strong>Hack The Box reversing challenge</strong> that focuses on a core reverse
+      engineering skill: taking a compiled binary, observing how it transforms input, and then working backward to recover
+      the value the program actually wants.
+    </p>
+
+    <p>
+      This kind of challenge is a great introduction to reversing because it teaches an important mindset. You do not
+      always need to break the program apart immediately. Often, the fastest path is to inspect its behavior, identify
+      where validation happens, and then reverse the logic one layer at a time.
+    </p>
+
+    <hr />
+
+    <h2>Video Walkthrough</h2>
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px;">
+      <iframe
+        src="https://www.youtube.com/embed/ZbXY78oOKMI"
+        title="HTB Reverse Walkthrough"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+      ></iframe>
+    </div>
+
+    <hr />
+
+    <h2>Challenge Overview</h2>
+
+    <p>
+      In a reversing challenge, the program usually expects some hidden correct input. When the right value is provided,
+      the binary prints success output or reveals the flag. The job is to determine what that correct input is without
+      having the source code handed to us directly.
+    </p>
+
+    <p>
+      The general workflow is simple:
+    </p>
+
+    <ul>
+      <li>Identify the file type</li>
+      <li>Run the binary and observe its behavior</li>
+      <li>Inspect strings and obvious clues</li>
+      <li>Locate the validation logic</li>
+      <li>Reverse the transformation being applied to user input</li>
+    </ul>
+
+    <hr />
+
+    <h2>Step 1: Identify the Binary</h2>
+
+    <p>
+      A good first move is to inspect the file with common command-line tools:
+    </p>
+
+    <pre><code class="language-bash">file reverse
+strings reverse | less</code></pre>
+
+    <p>
+      Even when a challenge is meant to be solved through deeper reversing, these quick checks can reveal useful hints
+      about the binary format, embedded messages, or the general structure of the validation flow.
+    </p>
+
+    <hr />
+
+    <h2>Step 2: Run the Program</h2>
+
+    <p>
+      After that, execute the binary and test how it reacts to different inputs.
+    </p>
+
+    <pre><code class="language-bash">./reverse</code></pre>
+
+    <p>
+      This gives you two valuable things immediately:
+    </p>
+
+    <ul>
+      <li>How the program expects input</li>
+      <li>How success and failure are handled</li>
+    </ul>
+
+    <p>
+      In many beginner reversing challenges, the program takes a string, transforms it somehow, and compares the result
+      against a hard-coded expected value.
+    </p>
+
+    <hr />
+
+    <h2>Step 3: Locate the Validation Logic</h2>
+
+    <p>
+      Once basic testing is done, the next step is to inspect the binary in a reversing tool and find the comparison logic.
+      This is the point where you want to identify:
+    </p>
+
+    <ul>
+      <li>Where user input is read</li>
+      <li>What function manipulates it</li>
+      <li>What value it is ultimately compared against</li>
+    </ul>
+
+    <p>
+      In small HTB reversing challenges, this logic is often compact enough that once you find the transformation function,
+      most of the puzzle is already solved.
+    </p>
+
+    <hr />
+
+    <h2>Step 4: Work Backward</h2>
+
+    <p>
+      The real trick in challenges like Reverse is not just reading the code. It is understanding the transformation and
+      then inverting it.
+    </p>
+
+    <p>
+      For example, if the program shifts characters, reverses a string, XORs bytes, or applies simple arithmetic, you can
+      usually undo that operation manually or with a short script.
+    </p>
+
+    <pre><code class="language-python"># Example pattern only
+expected = "encoded_value"
+
+# Reverse the transformation here
+# so you can recover the original input</code></pre>
+
+    <p>
+      Once you reconstruct the original correct input, you feed it back into the binary and retrieve the success output.
+    </p>
+
+    <hr />
+
+    <h2>Why This Challenge Is Useful</h2>
+
+    <p>
+      Beginner reversing challenges are less about memorizing tools and more about building pattern recognition. The more
+      often you see input transformations, hard-coded comparisons, and small validation routines, the faster you get at
+      spotting them in future binaries.
+    </p>
+
+    <p>
+      That skill carries over into malware analysis, crackmes, and defensive reverse engineering work too.
+    </p>
+
+    <hr />
+
+    <h2>Tools Used</h2>
+
+    <ul>
+      <li><code>file</code></li>
+      <li><code>strings</code></li>
+      <li>Terminal execution</li>
+      <li>A reversing tool such as Ghidra, Cutter, or a debugger</li>
+    </ul>
+
+    <hr />
+
+    <h2>Takeaways</h2>
+
+    <ol>
+      <li>Start simple before opening heavy reversing tools.</li>
+      <li>Always find where input is read and where it is compared.</li>
+      <li>Most beginner reversing challenges are about understanding and undoing a transformation.</li>
+      <li>Reversing gets much easier once you focus on logic, not just assembly syntax.</li>
+    </ol>
+
+    <p>
+      Reverse is a solid beginner challenge because it reinforces the exact habit that matters most in binary analysis:
+      observe the transformation, then think backward.
+    </p>
+
+    <p>
+      More Hack The Box walkthroughs coming soon.
+    </p>
+  `
 }
 ];
