@@ -4,45 +4,68 @@ function AreaOfFocus() {
   return (
     <div className="Area-Of-Focus-Main">
       <h1 className='Area-Of-Focus-Title'>Core Competencies</h1>
-      
+
+      <div className='Area-Of-Focus-Area'>
+        <h2>Offensive Security</h2>
+        <p>
+          Security-focused engineer building toward offensive security assessments across AI systems, financial platforms, applications, APIs, and modern infrastructure. Strong emphasis on realistic exploit paths, adversarial thinking, and how vulnerabilities emerge across interconnected systems.
+        </p>
+        <p>
+          The real question is never whether a system works. It is how it breaks, who can break it, and what happens when they do.
+        </p>
+      </div>
+
       <div className='Area-Of-Focus-Area'>
         <h2>Smart Contracts & Web3</h2>
-        <p>Expertise in Solidity, Foundry/Forge, ERC-20/permit (EIP-2612), EIP-712 signatures, and upgradeability patterns (UUPS/proxies). Experience with low-level EVM (Yul/Huff) and bytecode analysis. Built production smart contract systems for USDC settlement, token recovery architecture, and reversible ERC-20 prototypes.</p>
-        <p>On-chain code is immutable. So every deployment is final, and every audit finding is a bullet dodged.</p>
+        <p>
+          Expertise in Solidity, Foundry/Forge, ERC-20/permit (EIP-2612), EIP-712 signatures, and upgradeability patterns (UUPS/proxies). Experience with low-level EVM (Yul/Huff) and bytecode analysis. Built production smart contract systems for USDC settlement, token recovery architecture, and reversible ERC-20 prototypes.
+        </p>
+        <p>
+          On-chain code is immutable. Every deployment is final, and every audit finding is a bullet dodged.
+        </p>
       </div>
 
       <div className='Area-Of-Focus-Area'>
-        <h2>Engineering & Development</h2>
-        <p>Full-stack engineer building production systems in Solidity, TypeScript, Rust, C#, and Node.js. Designed and shipped payment processing platforms, authentication systems, and API-driven merchant tools handling real financial transactions. Strong CS fundamentals—data structures, algorithms, system design—applied to real-world problems. Educator with 50,000+ students.</p>
-        <p>In today's world, anyone can write code. Making it secure, clean, efficient and production ready is a skill.</p>
-      </div>
-
-      <div className='Area-Of-Focus-Area'>
-        <h2>Security & Auditing</h2>
-        <p>Performed smart contract security reviews and audit-style assessments with focus on access control, signature verification, reentrancy, and economic attack surfaces. Skilled in threat modeling, fuzzing & invariant testing, and producing reproducible test cases with remediation guidance. CompTIA PenTest+ and Security+ certified.</p>
-        <p>In developing systems - Security shouldn't be an afterthought...it's integral that keeps millions of dollars safe.</p>
-      </div>
-
-      <div className='Area-Of-Focus-Area'>
-        <h2>Payments & Infrastructure</h2>
-        <p>Architected USDC-based payment rails enabling merchants to accept EVM assets with mainstream checkout experiences. Built API hooks, Web3Auth/WalletConnect integrations, and smart-contract-based settlement flows with permit-based approvals and signature-verified execution paths.</p>
-        <p>Moving real money means zero room for "oops". Every transaction is someone's livelihood.</p>
+        <h2>Payments & Financial Infrastructure</h2>
+        <p>
+          Architected USDC-based payment rails enabling merchants to accept EVM assets with mainstream checkout experiences. Built API hooks, Web3Auth/WalletConnect integrations, and smart-contract-based settlement flows with permit-based approvals and signature-verified execution paths.
+        </p>
+        <p>
+          When systems move real money, security is not a feature. It is the business.
+        </p>
       </div>
 
       <div className='Area-Of-Focus-Area'>
         <h2>Cloud & Backend Engineering</h2>
-        <p>Architect scalable serverless systems on AWS—4x certified with production experience across Lambda, DynamoDB, S3, API Gateway, and IAM. Built event-driven payment backends handling real transactions: cryptographic webhook verification, JWT auth, idempotent processing, and zero-downtime secrets rotation. Designed single-table DynamoDB schemas with optimized GSI access patterns. Every system includes full observability—CloudWatch, X-Ray, structured logs—because production failures are learning opportunities, not disasters.</p>
-        <p>A system is only as good as its weakest failure point. Keeping systems secure means keeping systems online, efficient and cost-effective.</p>
+        <p>
+          Architect scalable serverless systems on AWS with production experience across Lambda, DynamoDB, S3, API Gateway, and IAM. Built event-driven backends handling real transactions, cryptographic webhook verification, JWT auth, idempotent processing, and secure secrets management.
+        </p>
+        <p>
+          A system is only as good as its weakest failure point. Secure systems also need to stay online, observable, and resilient.
+        </p>
       </div>
 
       <div className='Area-Of-Focus-Area'>
-        <h2>AI & Data Engineering</h2>
-        <p>Prototyped LLM-assisted tooling for dispute triage and case documentation with emphasis on auditability (human-in-loop) and deterministic evidence capture. Experience with event instrumentation, analytics/telemetry pipelines, and DynamoDB data modeling for AI-powered systems.</p>
-        <p>AI is a tool, not magic. The real innovation is knowing when to trust it and when to keep humans in the loop.</p>
+        <h2>AI Systems & Emerging Attack Surfaces</h2>
+        <p>
+          Experience with LLM-assisted tooling, analytics pipelines, and AI-adjacent system design, with growing focus on prompt injection, agent abuse, data exposure, and the risks created by rapidly deployed AI products. Interested in how AI expands the attack surface across application and financial systems.
+        </p>
+        <p>
+          AI is not magic. It is software with a larger blast radius and a new layer of assumptions to exploit.
+        </p>
+      </div>
+
+      <div className='Area-Of-Focus-Area'>
+        <h2>Physical & Real-World Security Thinking</h2>
+        <p>
+          Interested in how physical access, human behavior, and real-world interactions intersect with digital systems. This includes thinking beyond purely remote attacks and considering how on-site presence, social engineering, and environmental weaknesses can become part of an attack chain.
+        </p>
+        <p>
+          The most dangerous exploit path is often the one that crosses boundaries others forgot to connect.
+        </p>
       </div>
     </div>
   );
 }
 
 export default AreaOfFocus;
-
