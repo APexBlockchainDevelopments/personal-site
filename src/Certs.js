@@ -20,6 +20,15 @@ function Certs() {
 
           <div className='cert'>
             <div className='cert-title-container'>
+              <h3>TCM Practical AI Pentest Associate</h3>
+            </div>
+            <a target="_blank" rel="noreferrer" href="https://certified.tcm-sec.com/47f4660a-5be6-4531-836f-e542f56da04e#acc.1qTLMUId">
+              <img className='PAPA' src='./certs/PAPA.png' alt='TCM-PAPA'></img>
+            </a>
+          </div>
+
+          <div className='cert'>
+            <div className='cert-title-container'>
               <h3>eJPT Security Certification</h3>
             </div>
             <a target="_blank" rel="noreferrer" href="https://security.ine.com/verify-certification/?c=0e24e9e6-8607-48cd-896f-6ed68021c77d">
